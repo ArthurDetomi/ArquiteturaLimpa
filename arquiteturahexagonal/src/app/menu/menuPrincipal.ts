@@ -5,10 +5,9 @@ import menuFundamentos from "./menuFundamentos";
 export default async function menuPrincipal() {
   TerminalUtil.titulo("Menu Principal");
 
-  const resposta = await terminal.singleColumnMenu(["1. Fundamentos", "Sair"])
-    .promise;
+  const [selectedIndex] = await TerminalUtil.menu(["1. Fundamentos", "Sair"]);
 
-  switch (resposta.selectedIndex) {
+  switch (selectedIndex) {
     case 0:
       await menuFundamentos();
       break;
