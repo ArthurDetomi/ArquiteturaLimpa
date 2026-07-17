@@ -39,4 +39,9 @@ export default class TerminalUtil {
 
     return [resposta.selectedIndex, resposta.selectedText];
   }
+
+  static async esperarEnter(): Promise<void> {
+    terminal.white("\nPressione Enter para continuar...");
+    await terminal.inputField({ echo: false }).promise;
+  }
 }
