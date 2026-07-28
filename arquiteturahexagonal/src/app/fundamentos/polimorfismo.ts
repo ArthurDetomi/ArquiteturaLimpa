@@ -14,7 +14,6 @@ export default async function polimorfismo() {
   const carro: Carro = tipoCarro === 0 ? new Ferrari() : new Fusca();
 
   while (true) {
-    TerminalUtil.limpar();
     TerminalUtil.exibirChaveValor(
       "Velocidade Máxima: ",
       `${carro.velocidadeMaxima} km/h`,

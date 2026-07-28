@@ -1,10 +1,10 @@
-import { terminal } from "terminal-kit";
+import { terminal } from 'terminal-kit';
 
 export default class TerminalUtil {
   static titulo(texto: string) {
     terminal.clear();
     terminal.magenta(`${texto}\n`);
-    terminal.magenta(`-`.repeat(texto.length) + "\n");
+    terminal.magenta(`-`.repeat(texto.length) + '\n');
   }
 
   static limpar() {
@@ -12,7 +12,22 @@ export default class TerminalUtil {
   }
 
   static exibirChaveValor(chave: string, valor: any) {
-    terminal.yellow(chave).green(valor).white("\n");
+    terminal.yellow(chave).green(valor).white('\n');
+  }
+
+  static async campoRequerido(
+    label: string,
+    valorPadrao: string = '',
+  ): Promise<string> {
+    terminal.yellow(`\n${label}`);
+
+    const valor = await terminal.inputField({
+      default: valorPadrao,
+    }).promise;
+
+    if (valor) return valor;
+
+    return TerminalUtil.campoRequerido(label);
   }
 
   static async menu(opcoes: string[]): Promise<[number, string]> {
@@ -24,7 +39,7 @@ export default class TerminalUtil {
   static async confirmacao(texto: string): Promise<Boolean> {
     terminal.yellow(`\n${texto}\n`);
 
-    const resposta = await terminal.singleLineMenu(["Sim", "Não"]).promise;
+    const resposta = await terminal.singleLineMenu(['Sim', 'Não']).promise;
 
     return resposta.selectedIndex === 0;
   }
@@ -41,7 +56,16 @@ export default class TerminalUtil {
   }
 
   static async esperarEnter(): Promise<void> {
-    terminal.white("\nPressione Enter para continuar...");
+    terminal.white('\nPressione Enter para continuar...');
     await terminal.inputField({ echo: false }).promise;
+  }
+
+  static async sucesso(texto: string) {
+    terminal.green(texto);
+  }
+
+  static async erro(texto: string, novaLinha: boolean = true) {
+    const newTexto = novaLinha ? +'\n' + texto : texto;
+    terminal.red(newTexto);
   }
 }
