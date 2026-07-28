@@ -1,6 +1,7 @@
 import RegistrarUsuario from '@/core/usuario/service/RegistrarUsuario';
 import TerminalUtil from '../util/TerminalUtil';
 import Usuario from '@/core/usuario/model/Usuario';
+import InverterSenhaCripto from '@/adapter/auth/InverterSenhaCriptografia';
 
 export default async function registrarUsuario() {
   TerminalUtil.titulo('Registrar Usuário');
@@ -14,14 +15,18 @@ export default async function registrarUsuario() {
 
   const usuario: Usuario = { nome, email, senha };
 
-  new RegistrarUsuario().executar(usuario);
+  const provedorCripto = new InverterSenhaCripto();
+
+  const casoDeUso = new RegistrarUsuario(provedorCripto);
+
+  await casoDeUso.executar(usuario);
 
   await TerminalUtil.sucesso('Usuário registrado com sucesso!');
 
   await TerminalUtil.esperarEnter();
 
   try {
-    new RegistrarUsuario().executar(usuario);
+    await casoDeUso.executar(usuario);
   } catch (e: any) {
     await TerminalUtil.erro(e.message);
   } finally {

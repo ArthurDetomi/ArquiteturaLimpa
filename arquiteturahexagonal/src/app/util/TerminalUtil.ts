@@ -65,7 +65,7 @@ export default class TerminalUtil {
   }
 
   static async erro(texto: string, novaLinha: boolean = true) {
-    const newTexto = novaLinha ? +'\n' + texto : texto;
+    const newTexto = novaLinha ? `\n${texto}\n` : texto;
     terminal.red(newTexto);
   }
 }
