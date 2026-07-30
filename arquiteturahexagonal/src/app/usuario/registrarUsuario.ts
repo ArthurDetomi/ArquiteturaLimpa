@@ -25,7 +25,7 @@ export default async function registrarUsuario() {
   try {
     await casoDeUso.executar(usuario);
 
-    await sucesso('Usuário registrado com sucesso!');
+    await sucesso(`\nUsuário registrado com sucesso!\n`);
   } catch (e: any) {
     await erro(e.message);
   } finally {
