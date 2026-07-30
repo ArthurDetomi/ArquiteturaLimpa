@@ -9,12 +9,9 @@ import RepositorioUsuarioMysql from '@/adapter/db/RepositorioUsuarioMySql';
 export default async function registrarUsuario() {
   TerminalUtil.titulo('Registrar Usuário');
 
-  const nome = await TerminalUtil.campoRequerido('Nome: ', 'Ana da Silva');
-  const email = await TerminalUtil.campoRequerido(
-    'Email: ',
-    'ana.silva@empresa.com.br',
-  );
-  const senha = await TerminalUtil.campoRequerido('Senha: ', '123456');
+  const nome = await TerminalUtil.campoRequerido('Nome: ');
+  const email = await TerminalUtil.campoRequerido('Email: ');
+  const senha = await TerminalUtil.campoRequerido('Senha: ');
 
   const usuario: Usuario = { nome, email, senha };
 
