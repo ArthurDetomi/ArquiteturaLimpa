@@ -4,6 +4,7 @@ import Usuario from '@/core/usuario/model/Usuario';
 
 import SenhaCripto from '@/adapter/auth/SenhaCripto';
 import RepositorioUsuarioEmMemoria from '@/adapter/db/RepositorioUsuarioEmMemoria';
+import RepositorioUsuarioMysql from '@/adapter/db/RepositorioUsuarioMySql';
 
 export default async function registrarUsuario() {
   TerminalUtil.titulo('Registrar Usuário');
@@ -19,18 +20,14 @@ export default async function registrarUsuario() {
 
   const provedorCripto = new SenhaCripto();
 
-  const repositorio = new RepositorioUsuarioEmMemoria();
+  const repositorio = new RepositorioUsuarioMysql();
 
   const casoDeUso = new RegistrarUsuario(repositorio, provedorCripto);
 
-  await casoDeUso.executar(usuario);
-
-  await TerminalUtil.sucesso('Usuário registrado com sucesso!');
-
-  await TerminalUtil.esperarEnter();
-
   try {
     await casoDeUso.executar(usuario);
+
+    await TerminalUtil.sucesso('Usuário registrado com sucesso!');
   } catch (e: any) {
     await TerminalUtil.erro(e.message);
   } finally {
