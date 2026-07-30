@@ -3,15 +3,16 @@ import TerminalUtil from '../util/TerminalUtil';
 import Usuario from '@/core/usuario/model/Usuario';
 
 import SenhaCripto from '@/adapter/auth/SenhaCripto';
-import RepositorioUsuarioEmMemoria from '@/adapter/db/RepositorioUsuarioEmMemoria';
 import RepositorioUsuarioMysql from '@/adapter/db/RepositorioUsuarioMySql';
 
 export default async function registrarUsuario() {
-  TerminalUtil.titulo('Registrar Usuário');
+  const { titulo, campoRequerido, sucesso, erro, esperarEnter } = TerminalUtil;
 
-  const nome = await TerminalUtil.campoRequerido('Nome: ');
-  const email = await TerminalUtil.campoRequerido('Email: ');
-  const senha = await TerminalUtil.campoRequerido('Senha: ');
+  titulo('Registrar Usuário');
+
+  const nome = await campoRequerido('Nome: ');
+  const email = await campoRequerido('Email: ');
+  const senha = await campoRequerido('Senha: ');
 
   const usuario: Usuario = { nome, email, senha };
 
@@ -24,10 +25,10 @@ export default async function registrarUsuario() {
   try {
     await casoDeUso.executar(usuario);
 
-    await TerminalUtil.sucesso('Usuário registrado com sucesso!');
+    await sucesso('Usuário registrado com sucesso!');
   } catch (e: any) {
-    await TerminalUtil.erro(e.message);
+    await erro(e.message);
   } finally {
-    await TerminalUtil.esperarEnter();
+    await esperarEnter();
   }
 }
