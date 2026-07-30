@@ -1,6 +1,7 @@
-import Usuario from '../model/Usuario';
+import Usuario from '../../core/usuario/model/Usuario';
+import RepositorioUsuario from '../../core/usuario/service/RepositorioUsuario';
 
-export default class RepositorioUsuarioEmMemoria {
+export default class RepositorioUsuarioEmMemoria implements RepositorioUsuario {
   private static readonly items: Usuario[] = [];
 
   async inserir(usuario: Usuario) {
