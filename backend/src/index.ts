@@ -11,6 +11,9 @@ import SenhaCripto from './external/auth/SenhaCripto';
 import RegistrarUsuarioController from './external/api/RegistrarUsuarioController';
 import LoginUsuario from './core/usuario/service/LoginUsuario';
 import LoginUsuarioController from './external/api/LoginUsuarioController';
+import ObterProdutoPorIdController from './external/api/ObterProdutoPorIdController';
+import ObterProdutoPorId from './core/produto/service/ObterProdutoPorId';
+import UsuarioMiddleware from './external/api/UsuarioMiddleware';
 
 const app = express();
 
@@ -36,6 +39,16 @@ const loginUsuario = new LoginUsuario(repositorioUsuario, provedorCripto);
 new LoginUsuarioController(app, loginUsuario);
 
 // -------------------------
+
+// ------------------------- Rotas protegidas
+
+const obterProduto = new ObterProdutoPorId();
+
+const usuarioMid = UsuarioMiddleware(repositorioUsuario);
+
+new ObterProdutoPorIdController(app, obterProduto, usuarioMid);
+
+// ------------------------- Rotas
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor executando na porta ${PORT}!`);

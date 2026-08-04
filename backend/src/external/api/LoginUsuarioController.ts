@@ -14,10 +14,7 @@ export default class LoginUsuarioController {
 
         const provedorJwt = new ProvedorJwt(process.env.JWT_SECRET!);
 
-        res.status(200).send({
-          usuario: usuario,
-          token: provedorJwt.gerar(usuario),
-        });
+        res.status(200).send(provedorJwt.gerar(usuario));
       } catch (error: any) {
         res.status(400).send(error.message);
       }
